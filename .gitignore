@@ -1,25 +1,41 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Python virtual environment
+venv/
 .env
+
+# Node modules (React/Node.js)
+node_modules/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Mac system files
+.DS_Store
+
+# Large data/model files
+*.pkl
+*.h5
+*.hdf5
+*.ckpt
+*.pth
+*.pt
+*.joblib
+*.npz
+*.npy
+
+# Compiled libraries
+*.so
+*.dylib
+
+# Log files
+*.log
+
+# VSCode settings (optional)
+.vscode/
+
+# Build output (optional)
+dist/
+build/
