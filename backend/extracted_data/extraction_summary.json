@@ -1,0 +1,152 @@
+[
+  {
+    "exercise_name": "Preacher Curls",
+    "video_path": "videos/Preacher Curls/preacher_curl02.mov",
+    "fps": 29.697841726618705,
+    "frame_count": 688,
+    "duration": 23.166666666666668,
+    "frames_with_pose": 681,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T02:54:50"
+  },
+  {
+    "exercise_name": "Preacher Curls",
+    "video_path": "videos/Preacher Curls/preacher_curl01.mov",
+    "fps": 29.252611840342887,
+    "frame_count": 546,
+    "duration": 18.665,
+    "frames_with_pose": 532,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T02:55:21"
+  },
+  {
+    "exercise_name": "Tricep Pushdown",
+    "video_path": "videos/Tricep Pushdown/triceo_pushdown-1.mov",
+    "fps": 29.69008618229553,
+    "frame_count": 867,
+    "duration": 29.201666666666668,
+    "frames_with_pose": 860,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T02:56:09"
+  },
+  {
+    "exercise_name": "Tricep Pushdown",
+    "video_path": "videos/Tricep Pushdown/tricep_pushdown02.mov",
+    "fps": 29.291338582677167,
+    "frame_count": 496,
+    "duration": 16.933333333333334,
+    "frames_with_pose": 484,
+    "frames_without_pose": 1,
+    "extraction_timestamp": "2025-07-13T02:56:37"
+  },
+  {
+    "exercise_name": "Tricep Pushdown",
+    "video_path": "videos/Tricep Pushdown/tricep_pushdown01.MOV",
+    "fps": 30.0,
+    "frame_count": 120,
+    "duration": 4.0,
+    "frames_with_pose": 120,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T02:56:48"
+  },
+  {
+    "exercise_name": "Lat Pulldown",
+    "video_path": "videos/Lat Pulldown/lat_pulldown03.mov",
+    "fps": 30.0,
+    "frame_count": 364,
+    "duration": 12.133333333333333,
+    "frames_with_pose": 363,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T02:57:09"
+  },
+  {
+    "exercise_name": "Lat Pulldown",
+    "video_path": "videos/Lat Pulldown/lat_pulldown02.mov",
+    "fps": 29.8992443324937,
+    "frame_count": 1187,
+    "duration": 39.7,
+    "frames_with_pose": 1183,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T02:58:16"
+  },
+  {
+    "exercise_name": "Lat Pulldown",
+    "video_path": "videos/Lat Pulldown/lat_pulldown01.mov",
+    "fps": 29.79000488360736,
+    "frame_count": 305,
+    "duration": 10.238333333333333,
+    "frames_with_pose": 303,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T02:58:34"
+  },
+  {
+    "exercise_name": "Chest Fly",
+    "video_path": "videos/Chest Fly/chest_fly02.mov",
+    "fps": 30.0,
+    "frame_count": 1369,
+    "duration": 45.63333333333333,
+    "frames_with_pose": 1369,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T02:59:51"
+  },
+  {
+    "exercise_name": "Chest Fly",
+    "video_path": "videos/Chest Fly/chest_fly01.mov",
+    "fps": 29.6281951975213,
+    "frame_count": 765,
+    "duration": 25.82,
+    "frames_with_pose": 756,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T03:00:34"
+  },
+  {
+    "exercise_name": "Shoulder Press",
+    "video_path": "videos/Shoulder Press/shoulder_press_01.MOV",
+    "fps": 29.98821218074656,
+    "frame_count": 636,
+    "duration": 21.208333333333332,
+    "frames_with_pose": 636,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T03:01:10"
+  },
+  {
+    "exercise_name": "Shoulder Press",
+    "video_path": "videos/Shoulder Press/shoulder_press_02.MOV",
+    "fps": 29.999038492356014,
+    "frame_count": 1560,
+    "duration": 52.001666666666665,
+    "frames_with_pose": 1560,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T03:02:38"
+  },
+  {
+    "exercise_name": "Upper Back Row",
+    "video_path": "videos/Upper Back Row/upper_back_row.MOV",
+    "fps": 30.0,
+    "frame_count": 1500,
+    "duration": 50.0,
+    "frames_with_pose": 1497,
+    "frames_without_pose": 3,
+    "extraction_timestamp": "2025-07-13T03:04:02"
+  },
+  {
+    "exercise_name": "Lateral Raises",
+    "video_path": "videos/Lateral Raises/lateral_raise01.mov",
+    "fps": 29.779411764705884,
+    "frame_count": 540,
+    "duration": 18.133333333333333,
+    "frames_with_pose": 538,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T03:04:33"
+  },
+  {
+    "exercise_name": "Lateral Raises",
+    "video_path": "videos/Lateral Raises/lateral_raise02.mov",
+    "fps": 29.87331081081081,
+    "frame_count": 1179,
+    "duration": 39.46666666666667,
+    "frames_with_pose": 1176,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-13T03:05:40"
+  }
+]

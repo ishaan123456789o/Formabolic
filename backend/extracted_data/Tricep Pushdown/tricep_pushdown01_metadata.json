@@ -1,0 +1,10 @@
+{
+  "exercise_name": "Tricep Pushdown",
+  "video_path": "videos/Tricep Pushdown/tricep_pushdown01.MOV",
+  "fps": 30.0,
+  "frame_count": 120,
+  "duration": 4.0,
+  "frames_with_pose": 120,
+  "frames_without_pose": 0,
+  "extraction_timestamp": "2025-07-13T02:56:48"
+}
