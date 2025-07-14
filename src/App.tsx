@@ -166,12 +166,6 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome message with user name */}
-        {user && (
-          <div className="text-lg text-white mb-6">
-            Welcome back{user.displayName ? `, ${user.displayName}` : user.email ? `, ${user.email.split('@')[0]}` : ''}!
-          </div>
-        )}
         {renderContent()}
       </main>
     </div>

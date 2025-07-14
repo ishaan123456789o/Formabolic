@@ -62,7 +62,7 @@ export default function Dashboard({ onTabChange }: DashboardProps) {
 
   const todayMeals = dashboardTodayEntry?.meals || [];
   const todayTotals = todayMeals.reduce(
-    (acc, meal) => {
+    (acc: {calories: number, protein: number}, meal: any) => {
       acc.calories += meal.calories || 0;
       acc.protein += meal.protein || 0;
       return acc;
@@ -70,10 +70,13 @@ export default function Dashboard({ onTabChange }: DashboardProps) {
     { calories: 0, protein: 0 }
   );
 
+  // Get user's first name for the banner
+  const firstName = user?.displayName?.split(' ')[0] || '';
+
   return (
     <div className="space-y-6">
       <div className="bg-gradient-to-r from-green-500 to-purple-600 text-white p-6 rounded-xl shadow-2xl shadow-green-500/20">
-        <h1 className="text-2xl font-bold mb-2">Welcome Back!</h1>
+        <h1 className="text-2xl font-bold mb-2">Welcome Back{firstName ? `, ${firstName}` : ''}!</h1>
         <p className="text-green-100">Ready to crush your fitness goals today?</p>
       </div>
 
