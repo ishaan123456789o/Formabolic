@@ -14,6 +14,12 @@ from typing import List, Dict, Any, Optional
 import json
 import joblib  # <-- Add this import
 
+# Add this block to handle optional tensorflow import
+try:
+    import tensorflow as tf
+except ImportError:
+    tf = None
+
 class ExerciseRecognizer:
     """Class to handle exercise recognition using trained models."""
     
@@ -26,55 +32,57 @@ class ExerciseRecognizer:
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5
         )
-        self.model = None
+        self.models = []  # List of dicts: {model, model_type, class_names}
         self.label_encoder = None
         self.sequence_length = 30
-        
-        # Load the best available model
-        self._load_model()
+        self._load_models()
     
-    def _load_model(self):
-        """Load the best available trained model."""
+    def _load_models(self):
+        """Load all available trained models."""
         if not self.model_path.exists():
             print(f"Warning: Model directory not found: {self.model_path}")
             return
-        
-        # Find the most recent model
         model_dirs = [d for d in self.model_path.iterdir() if d.is_dir()]
         if not model_dirs:
             print("No trained models found!")
             return
-        
-        # For now, just use the first model found
-        # In production, you might want to load the best performing model
-        model_dir = model_dirs[0]
-        print(f"Loading model from: {model_dir}")
-        
-        try:
-            # Load model results
-            results_file = model_dir / "training_results.json"
-            with open(results_file, 'r') as f:
-                results = json.load(f)
-            
-            # Load the actual model (this would depend on the model type)
-            if results['model_type'] == 'random_forest':
-                model_file = model_dir / "model.pkl"
-                if model_file.exists():
-                    self.model = joblib.load(model_file)  # <-- Use joblib.load instead of pickle.load
-            
-            # Load label encoder
-            label_encoder_file = Path("extracted_data/label_encoder.pkl")
-            if label_encoder_file.exists():
-                with open(label_encoder_file, 'rb') as f:
-                    self.label_encoder = pickle.load(f)
-            
-            print(f"✓ Model loaded successfully!")
-            print(f"  - Type: {results['model_type']}")
-            print(f"  - Accuracy: {results.get('accuracy', 'N/A')}")
-            print(f"  - Classes: {results.get('class_names', [])}")
-            
-        except Exception as e:
-            print(f"Error loading model: {e}")
+        # Load label encoder
+        label_encoder_file = Path("extracted_data/label_encoder.pkl")
+        if label_encoder_file.exists():
+            with open(label_encoder_file, 'rb') as f:
+                self.label_encoder = pickle.load(f)
+        for model_dir in model_dirs:
+            try:
+                results_file = model_dir / "training_results.json"
+                with open(results_file, 'r') as f:
+                    results = json.load(f)
+                model_type = results.get('model_type')
+                class_names = results.get('class_names')
+                model = None
+                if model_type == 'random_forest':
+                    model_file = model_dir / "model.pkl"
+                    if model_file.exists():
+                        model = joblib.load(model_file)
+                elif model_type == 'lstm':
+                    if tf is not None:
+                        model_file = model_dir / "model.h5"
+                        if model_file.exists():
+                            model = tf.keras.models.load_model(model_file)
+                    else:
+                        print(f"TensorFlow not available, skipping LSTM model in {model_dir}")
+                        continue
+                elif model_type == 'dummy':
+                    # No actual model file, skip
+                    continue
+                if model is not None:
+                    self.models.append({
+                        'model': model,
+                        'model_type': model_type,
+                        'class_names': class_names
+                    })
+                    print(f"✓ Loaded model: {model_type} from {model_dir}")
+            except Exception as e:
+                print(f"Error loading model from {model_dir}: {e}")
     
     def extract_landmarks_from_video(self, video_path: str) -> List[Dict]:
         """Extract pose landmarks from a video file."""
@@ -157,85 +165,104 @@ class ExerciseRecognizer:
     
     def predict_exercise(self, video_path: str) -> Dict[str, Any]:
         """
-        Predict the exercise type from a video.
-        
+        Predict the exercise type from a video using all loaded models (majority vote).
         Returns:
             Dictionary with prediction results
         """
-        if self.model is None:
+        if not self.models:
             return {
-                'error': 'No trained model available',
+                'error': 'No trained models available',
                 'prediction': None,
                 'confidence': 0.0
             }
-        
         try:
             # Extract landmarks
             print("Extracting landmarks from video...")
             landmarks_data = self.extract_landmarks_from_video(video_path)
-            
             if not landmarks_data:
                 return {
                     'error': 'No pose detected in video',
                     'prediction': None,
                     'confidence': 0.0
                 }
-            
             # Preprocess landmarks
             print("Preprocessing landmarks...")
             features = self.preprocess_landmarks(landmarks_data)
-            
             if len(features) < self.sequence_length:
                 return {
                     'error': f'Video too short. Need at least {self.sequence_length} frames',
                     'prediction': None,
                     'confidence': 0.0
                 }
-            
             # Create sequences
             sequences = self.create_sequences(features)
-            
-            # Make predictions
-            print("Making predictions...")
-            # Flatten input for RandomForest if needed
-            if hasattr(self.model, 'predict_proba') and len(sequences.shape) == 3:
-                sequences = sequences.reshape(sequences.shape[0], -1)
-            if hasattr(self.model, 'predict_proba'):
-                # For models that support probability predictions
-                predictions = self.model.predict(sequences)
-                probabilities = self.model.predict_proba(sequences)
-                
-                # Get the most common prediction and its confidence
-                from collections import Counter
-                pred_counts = Counter(predictions)
-                most_common_pred = pred_counts.most_common(1)[0][0]
-                confidence = pred_counts[most_common_pred] / len(predictions)
-                
-                # Get average probability for the most common prediction
-                avg_prob = np.mean([prob[most_common_pred] for prob in probabilities])
-                confidence = max(confidence, avg_prob)
-                
-            else:
-                # For models that only support class predictions
-                predictions = self.model.predict(sequences)
-                from collections import Counter
-                pred_counts = Counter(predictions)
-                most_common_pred = pred_counts.most_common(1)[0][0]
-                confidence = pred_counts[most_common_pred] / len(predictions)
-            
-            # Decode the prediction
-            if self.label_encoder is not None:
-                exercise_name = self.label_encoder.inverse_transform([most_common_pred])[0]
-            else:
-                exercise_name = f"class_{most_common_pred}"
-            
+            predictions = []
+            confidences = []
+            model_details = []
+            for m in self.models:
+                model = m['model']
+                model_type = m['model_type']
+                try:
+                    seq_input = sequences
+                    if model_type == 'random_forest' and len(sequences.shape) == 3:
+                        seq_input = sequences.reshape(sequences.shape[0], -1)
+                    if hasattr(model, 'predict_proba'):
+                        preds = model.predict(seq_input)
+                        probs = model.predict_proba(seq_input)
+                        from collections import Counter
+                        pred_counts = Counter(preds)
+                        most_common_pred = pred_counts.most_common(1)[0][0]
+                        confidence = pred_counts[most_common_pred] / len(preds)
+                        avg_prob = np.mean([prob[most_common_pred] for prob in probs])
+                        confidence = max(confidence, avg_prob)
+                    else:
+                        # Assume LSTM (keras)
+                        preds = model.predict(seq_input)
+                        if preds.ndim == 3:
+                            preds = preds[:, -1, :]
+                        pred_classes = np.argmax(preds, axis=-1)
+                        from collections import Counter
+                        pred_counts = Counter(pred_classes)
+                        most_common_pred = pred_counts.most_common(1)[0][0]
+                        confidence = pred_counts[most_common_pred] / len(pred_classes)
+                        avg_prob = np.mean(preds[:, most_common_pred])
+                        confidence = max(confidence, avg_prob)
+                    # Decode
+                    if self.label_encoder is not None:
+                        exercise_name = self.label_encoder.inverse_transform([most_common_pred])[0]
+                    elif m['class_names']:
+                        exercise_name = m['class_names'][most_common_pred]
+                    else:
+                        exercise_name = f"class_{most_common_pred}"
+                    predictions.append(exercise_name)
+                    confidences.append(confidence)
+                    model_details.append({
+                        'model_type': model_type,
+                        'prediction': exercise_name,
+                        'confidence': confidence
+                    })
+                except Exception as e:
+                    model_details.append({
+                        'model_type': model_type,
+                        'error': str(e)
+                    })
+            if not predictions:
+                return {
+                    'error': 'All models failed to predict',
+                    'prediction': None,
+                    'confidence': 0.0,
+                    'model_details': model_details
+                }
+            from collections import Counter
+            final_pred = Counter(predictions).most_common(1)[0][0]
+            avg_conf = float(np.mean([c for p, c in zip(predictions, confidences) if p == final_pred]))
             return {
-                'prediction': exercise_name,
-                'confidence': confidence,
+                'prediction': final_pred,
+                'confidence': avg_conf,
+                'model_details': model_details,
                 'num_sequences': len(sequences),
                 'video_frames': len(landmarks_data)
             }
-            
         except Exception as e:
             return {
                 'error': f'Prediction failed: {str(e)}',

@@ -1,0 +1,13 @@
+{
+  "model_type": "dummy",
+  "accuracy": 0.0,
+  "class_names": [
+    "Chest Fly",
+    "Lat Pulldown",
+    "Lateral Raises",
+    "Preacher Curls",
+    "Shoulder Press",
+    "Tricep Pushdown",
+    "Upper Back Row"
+  ]
+}

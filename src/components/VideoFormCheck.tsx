@@ -29,6 +29,10 @@ export default function VideoFormCheck() {
       setIsRecording(false);
       setFeedback(null);
       setPoseOverlayBurst(null);
+      setPrediction(null);
+      setConfidence(null);
+      setPredictError(null);
+      setAnalyzeError(null);
     }
   };
 
@@ -87,6 +91,12 @@ export default function VideoFormCheck() {
 
       mediaRecorder.start();
       setIsRecording(true);
+      setFeedback(null);
+      setPoseOverlayBurst(null);
+      setPrediction(null);
+      setConfidence(null);
+      setPredictError(null);
+      setAnalyzeError(null);
     } catch (error) {
       console.error('Error accessing camera:', error);
       alert('Unable to access camera. Please ensure you have given permission.');
@@ -108,6 +118,24 @@ export default function VideoFormCheck() {
     setFeedback(null);
     setPoseOverlayBurst(null);
     setIsAnalyzing(false);
+    setPrediction(null);
+    setConfidence(null);
+    setPredictError(null);
+    setAnalyzeError(null);
+  };
+
+  const normalizeExercise = (name: string) => {
+    return name
+      .toLowerCase()
+      .replace(/\s/g, '')
+      .replace(/curls$/, 'curl')
+      .replace(/flies$/, 'fly')
+      .replace(/presses$/, 'press')
+      .replace(/rows$/, 'row')
+      .replace(/raises$/, 'raise')
+      .replace(/extensions$/, 'extension')
+      .replace(/pushdowns$/, 'pushdown')
+      .replace(/s$/, ''); // Remove trailing plural s
   };
 
   const analyzeForm = async () => {
@@ -116,6 +144,9 @@ export default function VideoFormCheck() {
     setFeedback(null);
     setPoseOverlayBurst(null);
     setAnalyzeError(null);
+    setPrediction(null);
+    setConfidence(null);
+    setPredictError(null);
     try {
       // Fetch the video blob
       const response = await fetch(videoURL);
@@ -134,8 +165,11 @@ export default function VideoFormCheck() {
       const predictData = await predictRes.json();
       setPrediction(predictData.prediction);
       setConfidence(predictData.confidence);
-      // 2. Compare predicted exercise to selected
-      if (predictData.prediction && predictData.prediction.toLowerCase().replace(/\s/g, '') !== exercise.toLowerCase().replace(/\s/g, '')) {
+      // 2. Compare predicted exercise to selected (robust normalization)
+      if (
+        predictData.prediction &&
+        normalizeExercise(predictData.prediction) !== normalizeExercise(exercise)
+      ) {
         setAnalyzeError(`Invalid: The movement in the video does not match the selected exercise. (Predicted: ${predictData.prediction}, Selected: ${exercise})`);
         setIsAnalyzing(false);
         return;
@@ -165,6 +199,9 @@ export default function VideoFormCheck() {
     setPrediction(null);
     setConfidence(null);
     setPredictError(null);
+    setAnalyzeError(null);
+    setFeedback(null);
+    setPoseOverlayBurst(null);
     try {
       const response = await fetch(videoURL);
       const blob = await response.blob();
@@ -212,124 +249,130 @@ export default function VideoFormCheck() {
             <option value="reardeltfly">Rear Delt Flies</option>
           </select>
         </div>
-        {/* Camera/Video Display */}
-        <div className="bg-black rounded-xl overflow-hidden mb-6 border border-gray-600" style={{ aspectRatio: '16/9' }}>
-          {videoURL ? (
-            <video
-              src={videoURL}
-              controls
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            />
-          )}
-          {!isRecording && !videoURL && (
-            <div className="flex flex-col items-center justify-center h-full text-white">
-              <Camera className="w-16 h-16 mb-4 opacity-50" />
-              <p className="text-lg opacity-75">Ready to record or upload your form</p>
+        {/* Centered error message above buttons */}
+        {analyzeError && (
+          <div className="w-full flex justify-center">
+            <div className="mb-4 text-red-500 text-base font-medium text-center">
+              Oops! The selected exercise doesn't match the exercise in the video.
             </div>
-          )}
-        </div>
-        {/* Recording & Upload Controls */}
-        <div className="flex flex-col md:flex-row justify-center gap-4 mb-6">
-          <div className="flex gap-4">
-            {!isRecording && !videoURL && (
-              <button
-                onClick={startRecording}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg font-medium btn-glow-orange"
-              >
-                <Camera className="w-5 h-5" />
-                Start Recording
-              </button>
-            )}
-            {isRecording && (
-              <button
-                onClick={stopRecording}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
-              >
-                <Square className="w-5 h-5" />
-                Stop Recording
-              </button>
-            )}
-            {videoURL && (
-              <button
-                onClick={resetRecording}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
-              >
-                <RotateCcw className="w-5 h-5" />
-                Record/Upload Again
-              </button>
-            )}
           </div>
-          <div className="flex gap-4 items-center mt-4 md:mt-0">
-            {!isRecording && !videoURL && (
-              <label className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg font-medium btn-glow-purple cursor-pointer">
-                <Upload className="w-5 h-5" />
-                Upload Video
-                <input
-                  type="file"
-                  accept="video/*"
-                  onChange={handleFileUpload}
-                  className="hidden"
-                />
-              </label>
+        )}
+        {/* Centered buttons and prediction card */}
+        <div className="flex flex-col items-center justify-center gap-4">
+          {/* Camera/Video Display */}
+          <div className="bg-black rounded-xl overflow-hidden mb-6 border border-gray-600" style={{ aspectRatio: '16/9' }}>
+            {videoURL ? (
+              <video
+                src={videoURL}
+                controls
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
             )}
-          </div>
-          {videoURL && (
-            <button
-              onClick={analyzeForm}
-              disabled={isAnalyzing}
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium btn-glow-green disabled:opacity-50 disabled:cursor-not-allowed mt-4 md:mt-0"
-            >
-              <Brain className="w-5 h-5" />
-              {isAnalyzing ? 'Analyzing...' : 'Analyze Form'}
-            </button>
-          )}
-          {/* Add Predict Exercise button */}
-          {videoURL && (
-            <button
-              onClick={predictExercise}
-              disabled={isPredicting}
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-medium btn-glow-blue disabled:opacity-50 disabled:cursor-not-allowed mt-4 md:mt-0"
-            >
-              <Brain className="w-5 h-5" />
-              {isPredicting ? 'Predicting...' : 'Predict Exercise'}
-            </button>
-          )}
-          {isPredicting && (
-            <div className="text-center py-4">
-              <div className="inline-flex items-center gap-3 text-blue-400">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-400"></div>
-                <span className="font-medium">AI is predicting the exercise...</span>
+            {!isRecording && !videoURL && (
+              <div className="flex flex-col items-center justify-center h-full text-white">
+                <Camera className="w-16 h-16 mb-4 opacity-50" />
+                <p className="text-lg opacity-75">Ready to record or upload your form</p>
               </div>
+            )}
+          </div>
+          {/* Recording & Upload Controls */}
+          <div className="flex flex-col md:flex-row justify-center gap-4 mb-6">
+            <div className="flex gap-4">
+              {!isRecording && !videoURL && (
+                <button
+                  onClick={startRecording}
+                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg font-medium btn-glow-orange"
+                >
+                  <Camera className="w-5 h-5" />
+                  Start Recording
+                </button>
+              )}
+              {isRecording && (
+                <button
+                  onClick={stopRecording}
+                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
+                >
+                  <Square className="w-5 h-5" />
+                  Stop Recording
+                </button>
+              )}
+              {videoURL && (
+                <button
+                  onClick={resetRecording}
+                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
+                >
+                  <RotateCcw className="w-5 h-5" />
+                  Record/Upload Again
+                </button>
+              )}
             </div>
-          )}
-          {prediction && (
-            <div className="bg-blue-700 border border-blue-600 rounded-lg p-4 mt-4">
-              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                <Brain className="w-5 h-5 text-blue-300" />
-                Predicted Exercise
-              </h3>
-              <div className="text-white text-xl font-semibold">{prediction}</div>
-              <div className="text-blue-200 text-sm mt-1">Confidence: {(confidence! * 100).toFixed(1)}%</div>
+            <div className="flex gap-4 items-center mt-4 md:mt-0">
+              {!isRecording && !videoURL && (
+                <label className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg font-medium btn-glow-purple cursor-pointer">
+                  <Upload className="w-5 h-5" />
+                  Upload Video
+                  <input
+                    type="file"
+                    accept="video/*"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                  />
+                </label>
+              )}
             </div>
-          )}
-          {predictError && (
-            <div className="bg-red-700 border border-red-600 rounded-lg p-4 mt-4 text-white">
-              Error: {predictError}
-            </div>
-          )}
-          {analyzeError && (
-            <div className="bg-red-700 border border-red-600 rounded-lg p-4 mt-4 text-white">
-              {analyzeError}
-            </div>
-          )}
+            {videoURL && !analyzeError && !predictError && (
+              <button
+                onClick={analyzeForm}
+                disabled={isAnalyzing}
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium btn-glow-green disabled:opacity-50 disabled:cursor-not-allowed mt-4 md:mt-0"
+              >
+                <Brain className="w-5 h-5" />
+                {isAnalyzing ? 'Analyzing...' : 'Analyze Form'}
+              </button>
+            )}
+            {/* Add Predict Exercise button */}
+            {videoURL && !analyzeError && !predictError && (
+              <button
+                onClick={predictExercise}
+                disabled={isPredicting}
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-medium btn-glow-blue disabled:opacity-50 disabled:cursor-not-allowed mt-4 md:mt-0"
+              >
+                <Brain className="w-5 h-5" />
+                {isPredicting ? 'Predicting...' : 'Predict Exercise'}
+              </button>
+            )}
+            {isPredicting && (
+              <div className="text-center py-4">
+                <div className="inline-flex items-center gap-3 text-blue-400">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-400"></div>
+                  <span className="font-medium">AI is predicting the exercise...</span>
+                </div>
+              </div>
+            )}
+            {prediction && (
+              <div className="bg-blue-700 border border-blue-600 rounded-lg p-4 mt-4">
+                <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                  <Brain className="w-5 h-5 text-blue-300" />
+                  Predicted Exercise
+                </h3>
+                <div className="text-white text-xl font-semibold">{prediction}</div>
+                <div className="text-blue-200 text-sm mt-1">Confidence: {(confidence! * 100).toFixed(1)}%</div>
+              </div>
+            )}
+            {predictError && (
+              <div className="bg-red-700 border border-red-600 rounded-lg p-4 mt-4 text-white">
+                Error: {predictError}
+              </div>
+            )}
+          </div>
         </div>
         {/* Analysis Loading */}
         {isAnalyzing && (

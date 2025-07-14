@@ -1,13 +1,33 @@
 [
   {
     "exercise_name": "Preacher Curls",
+    "video_path": "videos/Preacher Curls/ScreenRecording_07-13-2025 19-25-19_1.mov",
+    "fps": 60.0079166116902,
+    "frame_count": 758,
+    "duration": 12.631666666666666,
+    "frames_with_pose": 758,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T17:47:28"
+  },
+  {
+    "exercise_name": "Preacher Curls",
+    "video_path": "videos/Preacher Curls/ScreenRecording_07-13-2025 18-56-47_1.mov",
+    "fps": 60.011355034065105,
+    "frame_count": 1057,
+    "duration": 17.613333333333333,
+    "frames_with_pose": 1057,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T17:48:44"
+  },
+  {
+    "exercise_name": "Preacher Curls",
     "video_path": "videos/Preacher Curls/preacher_curl02.mov",
     "fps": 29.697841726618705,
     "frame_count": 688,
     "duration": 23.166666666666668,
     "frames_with_pose": 681,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T02:54:50"
+    "extraction_timestamp": "2025-07-14T17:49:28"
   },
   {
     "exercise_name": "Preacher Curls",
@@ -15,9 +35,9 @@
     "fps": 29.252611840342887,
     "frame_count": 546,
     "duration": 18.665,
-    "frames_with_pose": 532,
-    "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T02:55:21"
+    "frames_with_pose": 503,
+    "frames_without_pose": 29,
+    "extraction_timestamp": "2025-07-14T17:49:57"
   },
   {
     "exercise_name": "Tricep Pushdown",
@@ -27,7 +47,7 @@
     "duration": 29.201666666666668,
     "frames_with_pose": 860,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T02:56:09"
+    "extraction_timestamp": "2025-07-14T17:50:49"
   },
   {
     "exercise_name": "Tricep Pushdown",
@@ -37,7 +57,7 @@
     "duration": 16.933333333333334,
     "frames_with_pose": 484,
     "frames_without_pose": 1,
-    "extraction_timestamp": "2025-07-13T02:56:37"
+    "extraction_timestamp": "2025-07-14T17:51:23"
   },
   {
     "exercise_name": "Tricep Pushdown",
@@ -47,7 +67,7 @@
     "duration": 4.0,
     "frames_with_pose": 120,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T02:56:48"
+    "extraction_timestamp": "2025-07-14T17:51:35"
   },
   {
     "exercise_name": "Lat Pulldown",
@@ -57,7 +77,7 @@
     "duration": 12.133333333333333,
     "frames_with_pose": 363,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T02:57:09"
+    "extraction_timestamp": "2025-07-14T17:51:56"
   },
   {
     "exercise_name": "Lat Pulldown",
@@ -67,7 +87,7 @@
     "duration": 39.7,
     "frames_with_pose": 1183,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T02:58:16"
+    "extraction_timestamp": "2025-07-14T17:53:06"
   },
   {
     "exercise_name": "Lat Pulldown",
@@ -77,7 +97,17 @@
     "duration": 10.238333333333333,
     "frames_with_pose": 303,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T02:58:34"
+    "extraction_timestamp": "2025-07-14T17:53:24"
+  },
+  {
+    "exercise_name": "Chest Fly",
+    "video_path": "videos/Chest Fly/ScreenRecording_07-14-2025 10-38-03_1.mov",
+    "fps": 60.05449591280654,
+    "frame_count": 551,
+    "duration": 9.175,
+    "frames_with_pose": 551,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T17:53:53"
   },
   {
     "exercise_name": "Chest Fly",
@@ -87,7 +117,17 @@
     "duration": 45.63333333333333,
     "frames_with_pose": 1369,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T02:59:51"
+    "extraction_timestamp": "2025-07-14T17:55:12"
+  },
+  {
+    "exercise_name": "Chest Fly",
+    "video_path": "videos/Chest Fly/ScreenRecording_07-14-2025 10-32-52_1.mov",
+    "fps": 60.025695931477514,
+    "frame_count": 1168,
+    "duration": 19.458333333333332,
+    "frames_with_pose": 1168,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T17:56:18"
   },
   {
     "exercise_name": "Chest Fly",
@@ -97,7 +137,57 @@
     "duration": 25.82,
     "frames_with_pose": 756,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T03:00:34"
+    "extraction_timestamp": "2025-07-14T17:57:02"
+  },
+  {
+    "exercise_name": "Shoulder Press",
+    "video_path": "videos/Shoulder Press/ScreenRecording_07-14-2025 10-04-12_1.mov",
+    "fps": 60.03789587656772,
+    "frame_count": 1109,
+    "duration": 18.471666666666668,
+    "frames_with_pose": 1109,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T17:58:03"
+  },
+  {
+    "exercise_name": "Shoulder Press",
+    "video_path": "videos/Shoulder Press/ScreenRecording_07-14-2025 10-00-39_1.mov",
+    "fps": 60.05215447659258,
+    "frame_count": 806,
+    "duration": 13.421666666666667,
+    "frames_with_pose": 806,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T17:58:50"
+  },
+  {
+    "exercise_name": "Shoulder Press",
+    "video_path": "videos/Shoulder Press/ScreenRecording_07-14-2025 09-56-12_1.mov",
+    "fps": 60.01885409029014,
+    "frame_count": 955,
+    "duration": 15.911666666666667,
+    "frames_with_pose": 955,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T17:59:47"
+  },
+  {
+    "exercise_name": "Shoulder Press",
+    "video_path": "videos/Shoulder Press/ScreenRecording_07-14-2025 09-58-09_1.mov",
+    "fps": 60.015310028068384,
+    "frame_count": 784,
+    "duration": 13.063333333333333,
+    "frames_with_pose": 784,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T18:00:29"
+  },
+  {
+    "exercise_name": "Shoulder Press",
+    "video_path": "videos/Shoulder Press/ScreenRecording_07-14-2025 10-00-10_1.mov",
+    "fps": 60.02501042100875,
+    "frame_count": 960,
+    "duration": 15.993333333333334,
+    "frames_with_pose": 960,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T18:01:22"
   },
   {
     "exercise_name": "Shoulder Press",
@@ -107,7 +197,7 @@
     "duration": 21.208333333333332,
     "frames_with_pose": 636,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T03:01:10"
+    "extraction_timestamp": "2025-07-14T18:01:59"
   },
   {
     "exercise_name": "Shoulder Press",
@@ -117,7 +207,37 @@
     "duration": 52.001666666666665,
     "frames_with_pose": 1560,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T03:02:38"
+    "extraction_timestamp": "2025-07-14T18:03:31"
+  },
+  {
+    "exercise_name": "Upper Back Row",
+    "video_path": "videos/Upper Back Row/ScreenRecording_07-14-2025 10-11-26_1.mov",
+    "fps": 60.007595898214966,
+    "frame_count": 790,
+    "duration": 13.165,
+    "frames_with_pose": 790,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T18:04:13"
+  },
+  {
+    "exercise_name": "Upper Back Row",
+    "video_path": "videos/Upper Back Row/ScreenRecording_07-14-2025 10-12-33_1.mov",
+    "fps": 60.02027712064887,
+    "frame_count": 1184,
+    "duration": 19.726666666666667,
+    "frames_with_pose": 1184,
+    "frames_without_pose": 0,
+    "extraction_timestamp": "2025-07-14T18:05:23"
+  },
+  {
+    "exercise_name": "Upper Back Row",
+    "video_path": "videos/Upper Back Row/ScreenRecording_07-14-2025 10-10-56_1.mov",
+    "fps": 60.00646621403168,
+    "frame_count": 928,
+    "duration": 15.465,
+    "frames_with_pose": 644,
+    "frames_without_pose": 284,
+    "extraction_timestamp": "2025-07-14T18:06:17"
   },
   {
     "exercise_name": "Upper Back Row",
@@ -127,7 +247,7 @@
     "duration": 50.0,
     "frames_with_pose": 1497,
     "frames_without_pose": 3,
-    "extraction_timestamp": "2025-07-13T03:04:02"
+    "extraction_timestamp": "2025-07-14T18:07:48"
   },
   {
     "exercise_name": "Lateral Raises",
@@ -137,7 +257,7 @@
     "duration": 18.133333333333333,
     "frames_with_pose": 538,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T03:04:33"
+    "extraction_timestamp": "2025-07-14T18:08:21"
   },
   {
     "exercise_name": "Lateral Raises",
@@ -147,6 +267,6 @@
     "duration": 39.46666666666667,
     "frames_with_pose": 1176,
     "frames_without_pose": 0,
-    "extraction_timestamp": "2025-07-13T03:05:40"
+    "extraction_timestamp": "2025-07-14T18:09:28"
   }
 ]

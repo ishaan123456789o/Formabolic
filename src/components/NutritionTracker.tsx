@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Save, Target, TrendingUp } from 'lucide-react';
+import { Plus, Trash2, Save, Target, TrendingUp, User } from 'lucide-react';
 import { saveNutritionEntry, getNutritionEntries, saveNutritionGoals, getNutritionGoals } from '../utils/storage';
 import { NutritionEntry, Meal, NutritionGoals } from '../types';
 import { searchFoods, addUserFood } from '../utils/foodDataCentral';
@@ -322,7 +322,12 @@ export default function NutritionTracker() {
                     <div className="text-white font-medium flex items-center gap-2">
                       {food.description}
                       {food.isUserFood && (
-                        <span className="inline-block bg-green-600 text-white text-xs font-semibold px-2 py-0.5 rounded ml-2 align-middle">User</span>
+                        <div className="relative group inline-block ml-1 align-middle">
+                          <User className="w-4 h-4 text-green-400 cursor-pointer" />
+                          <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max px-3 py-1 rounded bg-gray-900 text-xs text-white opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-20 shadow-lg border border-gray-700">
+                            This food was added by a Formabolic user.
+                          </div>
+                        </div>
                       )}
                     </div>
                     <div className="flex items-center gap-2 mt-1">
